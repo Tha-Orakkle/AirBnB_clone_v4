@@ -67,17 +67,6 @@ $(document).ready(function () {
     }
   });
 
-  const amenities = {};
-  $('input[type="checkbox"]').click(function () {
-    if ($(this).is(':checked')) {
-      amenities[$(this).attr('data-id')] = $(this).attr('data-name');
-    } else {
-      delete amenities[$(this).attr('data-id')];
-    }
-
-    $('h4#selectedAmenities').text(Object.values(amenities).join(', '));
-  });
-
   $.ajax({
     type: 'POST',
     url: placesSearch,
@@ -89,5 +78,36 @@ $(document).ready(function () {
         $('section.places').append(createPlace(data[i]));
       }
     }
+  });
+
+  const amenities = {};
+  $('input[type="checkbox"]').click(function () {
+    if ($(this).is(':checked')) {
+      amenities[$(this).attr('data-id')] = $(this).attr('data-name');
+    } else {
+      delete amenities[$(this).attr('data-id')];
+    }
+
+    $('h4#selectedAmenities').text(Object.values(amenities).join(', '));
+  });
+
+  $('button').click(function () {
+    const amenityList = [];
+    for (const key in amenities) {
+      amenityList.push(amenities[key]);
+    }
+    const amenityObj = { amenities: amenityList };
+    $.ajax({
+      type: 'POST',
+      url: placesSearch,
+      dataType: 'json',
+      data: JSON.stringify(amenityObj),
+      contentType: 'application/json',
+      success: function (data) {
+        for (let i = 0; i < data.length; i++) {
+          $('section.places').append(createPlace(data[i]));
+        }
+      }
+    });
   });
 });
