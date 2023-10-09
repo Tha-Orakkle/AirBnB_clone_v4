@@ -92,11 +92,11 @@ $(document).ready(function () {
   });
 
   $('button').click(function () {
-    const amenityList = [];
+    const amenityIdList = [];
     for (const key in amenities) {
-      amenityList.push(amenities[key]);
+      amenityIdList.push(key);
     }
-    const amenityObj = { amenities: amenityList };
+    const amenityObj = { amenities: amenityIdList };
     $.ajax({
       type: 'POST',
       url: placesSearch,
@@ -104,6 +104,7 @@ $(document).ready(function () {
       data: JSON.stringify(amenityObj),
       contentType: 'application/json',
       success: function (data) {
+        $('section.places').empty();
         for (let i = 0; i < data.length; i++) {
           $('section.places').append(createPlace(data[i]));
         }
