@@ -159,7 +159,8 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Jhoan Zamora - [Github](https://github.com/jzamora5) / [Twitter](https://twitter.com/JhoanZamora10)  
 David Ovalle - [Github](https://github.com/Nukemenonai) / [Twitter](https://twitter.com/disartDave)
 Paul Adegbiran-Ayinoluwa - [Github](https://github.com/Tha-Orakkle) / [Twitter](https://twitter.com/_Peezie)
-Joann Vuong
+_Joann Vuong
+Lawrence Ikhidero - [Github](https://github.com/lorens247 / [Twitter] (https://twitter.com/lorens247)
 
 ## License
 Public Domain. No copy write protection. 
