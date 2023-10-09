@@ -5,6 +5,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
+from models.review import Review
 from os import environ
 from flask import Flask, render_template
 import uuid
@@ -35,11 +36,16 @@ def hbnb():
 
     places = storage.all(Place).values()
     places = sorted(places, key=lambda k: k.name)
+    
+    reviews = storage.all(Review).values()
+    reviews = sorted(reviews, key=lambda k: k.name)
+    
 
     return render_template('101-hbnb.html',
                            states=st_ct,
                            amenities=amenities,
                            places=places,
+                           reviews=reviews,
                            cache_id = uuid.uuid4())
 
 

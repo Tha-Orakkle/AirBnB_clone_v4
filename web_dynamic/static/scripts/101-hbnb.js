@@ -50,19 +50,6 @@ $(document).ready(function () {
             </div>`;
   }
 
-  
-  // ------------------ Reviews Section --------------------//  
-  function createReviews () {  
-    const reviews = document.createElement('div');
-    $(reviews).addClass('reviews');
-    reviews.innerHTML = `<div class="review-head">
-                          <h2>Reviews</h2>
-                          <button><span>show</span></button>
-                        </div>
-                        <div class="review-body"></div>`;
-    return reviews;
-  }
-
   // ---------- creates the place section ---------------//
   function createPlace (place) {
     const article = document.createElement('article');
@@ -70,7 +57,7 @@ $(document).ready(function () {
     const placeInfo = createPlaceInfo(place);
     const placeDescription = createPlaceDescription(place.description);
     article.innerHTML = placeTitle + placeInfo + placeDescription;
-    article.append(createReviews());
+    article.append(createReviews(place));
     return article;
   }
 
@@ -143,7 +130,7 @@ $(document).ready(function () {
     }
   });
 
-  $('button').click(function () {
+  $('.filters button').click(function () {
     const filterOptions = {
       amenities: Object.keys(amenities),
       states: Object.keys(states),
@@ -166,4 +153,47 @@ $(document).ready(function () {
     });
   });
 
+  // ------------------ Reviews Section --------------------//  
+  function createReviews (placeId) {  
+    const reviews = document.createElement('div');
+    $(reviews).addClass('reviews');
+
+    const reviewHead = document.createElement('div');
+    $(reviewHead).addClass('review-head');
+
+    const reviewH2 = document.createElement('h2');
+    $(reviewH2).text('Reviews');
+
+    const reviewBtn = document.createElement('button');
+    $(reviewBtn).html('<span>show</span>');
+
+    $(reviewHead).append(reviewH2, reviewBtn);
+
+    const reviewBody = document.createElement('div');
+    $(reviewBody).addClass('review-body');
+
+    $(reviews).append(reviewHead, reviewBody);
+
+    $(reviewBtn).click(function (placeId) {
+      const status = $(this).text()
+      const reviewURL = 'http://localhost:5001/api/v1/places';
+      if (status === 'hide') {
+        $(this).text('show');
+      } else if (status === 'show') {
+        $(this).text('hide')
+        $.ajax({
+          type: 'GET',
+          url: reviewURL + placeId + '/reviews',
+        })
+      }
+    });
+    
+    return reviews;
+  }
+
+  // $('.review-head button').click(function () {
+  //   $(this).text('hide');
+  //   $('.review-body').text('Clicked');
+  //   console.log('clicked');
+  // });
 });

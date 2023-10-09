@@ -32,11 +32,14 @@
     border: 1px solid #FF5A5F;
     border-radius: 4px;
 }
-.places h2 {
-    font-size: 30px;
-    text-align: center;
-    margin-top: 0;
+.places .review-head {
+    border-bottom: 1px solid #DDDDDD;
 }
+.places .review-head h2 {
+    display: inline-block;
+}
+
+
 .title_box {
     display: flex;
     justify-content: space-between;
