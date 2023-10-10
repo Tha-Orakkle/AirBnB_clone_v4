@@ -57,7 +57,7 @@ $(document).ready(function () {
     const placeInfo = createPlaceInfo(place);
     const placeDescription = createPlaceDescription(place.description);
     article.innerHTML = placeTitle + placeInfo + placeDescription;
-    article.append(createReviews(place));
+    article.append(createReviews(place.id));
     return article;
   }
 
@@ -176,7 +176,7 @@ $(document).ready(function () {
 
     $(reviewBtn).click(function (placeId) {
       const status = $(this).text()
-      const reviewURL = 'http://localhost:5001/api/v1/places';
+      const reviewURL = 'http://localhost:5001/api/v1/places/';
       if (status === 'hide') {
         $(this).text('show');
       } else if (status === 'show') {
@@ -184,10 +184,18 @@ $(document).ready(function () {
         $.ajax({
           type: 'GET',
           url: reviewURL + placeId + '/reviews',
-        })
+          dataType: 'json',
+          success: function (reviews) {
+            for (let i = 0; i < reviews.length; i++) {
+              const para = document.createElement('p');
+              $(para).text(reviews.text);
+              $(reviewBody).append(para);
+            }
+          }
+        });
       }
     });
-    
+
     return reviews;
   }
 
