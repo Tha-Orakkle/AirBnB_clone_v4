@@ -39,6 +39,21 @@
     display: inline-block;
 }
 
+.places .review-body ul {
+    list-style-type: none;
+}
+
+.places .review-body ul h5 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.places .review-body ul p {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
 
 .title_box {
     display: flex;

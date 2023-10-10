@@ -61,7 +61,6 @@ $(document).ready(function () {
     return article;
   }
 
-
   // ------------------- request to confirm API status --------------------- //
   const url = 'http://localhost:5001/api/v1/status/';
   $.get(url, function (response) {
@@ -137,7 +136,6 @@ $(document).ready(function () {
       cities: Object.keys(cities)
     };
 
-
     $.ajax({
       type: 'POST',
       url: placesSearch,
@@ -153,8 +151,38 @@ $(document).ready(function () {
     });
   });
 
-  // ------------------ Reviews Section --------------------//  
-  function createReviews (placeId) {  
+  // ------------------ Reviews Section --------------------//
+  function getDayOrdinal (day) {
+    if (day >= 11 && day <= 13) {
+      return day + 'th';
+    }
+    switch (day % 10) {
+      case 1:
+        return day + 'st';
+      case 2:
+        return day + 'nd';
+      case 3:
+        return day + 'rd';
+      default:
+        return day + 'th';
+    }
+  }
+
+  function formatdate (date) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+      'August', 'September', 'October', 'November', 'December'];
+    const currentDate = new Date(date);
+
+    const day = getDayOrdinal(currentDate.getDate());
+    const month = months[(currentDate.getMonth()) - 1];
+    const year = currentDate.getFullYear();
+
+    const result = `${day} ${month} ${year}`;
+
+    return result;
+  }
+
+  function createReviews (placeId) {
     const reviews = document.createElement('div');
     $(reviews).addClass('reviews');
 
@@ -165,7 +193,7 @@ $(document).ready(function () {
     $(reviewH2).text('Reviews');
 
     const reviewBtn = document.createElement('button');
-    $(reviewBtn).html('<span>show</span>');
+    $(reviewBtn).text('show');
 
     $(reviewHead).append(reviewH2, reviewBtn);
 
@@ -174,22 +202,38 @@ $(document).ready(function () {
 
     $(reviews).append(reviewHead, reviewBody);
 
-    $(reviewBtn).click(function (placeId) {
-      const status = $(this).text()
+    $(reviewBtn).click(function () {
+      const status = $(this).text();
       const reviewURL = 'http://localhost:5001/api/v1/places/';
       if (status === 'hide') {
         $(this).text('show');
+        $(reviewBody).empty();
       } else if (status === 'show') {
-        $(this).text('hide')
+        $(this).text('hide');
+        const reviewList = document.createElement('ul');
+        $(reviewBody).append(reviewList);
         $.ajax({
           type: 'GET',
           url: reviewURL + placeId + '/reviews',
           dataType: 'json',
           success: function (reviews) {
-            for (let i = 0; i < reviews.length; i++) {
-              const para = document.createElement('p');
-              $(para).text(reviews.text);
-              $(reviewBody).append(para);
+            const len = reviews.length;
+            if (len === 0) {
+              $(reviewList).html('<li>No Reviews Yet</li>');
+            } else {
+              for (let i = 0; i < len; i++) {
+                const eachReview = document.createElement('li');
+                $.ajax({
+                  type: 'GET',
+                  url: 'http://localhost:5001/api/v1/users/' + reviews[i].user_id,
+                  dataType: 'json',
+                  success: function (user) {
+                    const reviewer = `From ${user.first_name} ${user.last_name} on the ${formatdate(reviews[i].updated_at)}`;
+                    $(eachReview).html(`<h5>${reviewer}</h5><p>${reviews[i].text}</p>`);
+                    $(reviewList).append(eachReview);
+                  }
+                });
+              }
             }
           }
         });
@@ -198,10 +242,4 @@ $(document).ready(function () {
 
     return reviews;
   }
-
-  // $('.review-head button').click(function () {
-  //   $(this).text('hide');
-  //   $('.review-body').text('Clicked');
-  //   console.log('clicked');
-  // });
 });
