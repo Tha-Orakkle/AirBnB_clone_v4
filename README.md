@@ -160,7 +160,6 @@ Jhoan Zamora - [Github](https://github.com/jzamora5) / [Twitter](https://twitter
 David Ovalle - [Github](https://github.com/Nukemenonai) / [Twitter](https://twitter.com/disartDave)
 Joann Vuong
 Paul Adegbiran-Ayinoluwa - [Github](https://github.com/Tha-Orakkle) / [Twitter](https://twitter.com/_Peezie)
-Joann Vuong
 Lawrence Ikhidero - [Github](https://github.com/lorens247 / [Twitter] (https://twitter.com/lorens247)
 
 ## License

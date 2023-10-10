@@ -6,7 +6,7 @@
     border: 1px solid #DDDDDD;
     border-radius: 4px;
 }
-button {
+.filters button {
     position: absolute;
     font-size: 18px;
     background: #FF5A5F;
@@ -18,7 +18,7 @@ button {
     top: 15%;
     right: 30px;
 }
-button:hover {
+.filters button:hover {
     opacity: 0.9;
 }
 .filters div {
@@ -80,6 +80,7 @@ button:hover {
 
 .amenities .popover input[type="checkbox"] {
     width: 10px;
+    margin-left: 10px;
 }
 
 .locations .popover {
