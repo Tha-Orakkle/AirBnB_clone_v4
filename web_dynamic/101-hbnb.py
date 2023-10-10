@@ -38,7 +38,7 @@ def hbnb():
     places = sorted(places, key=lambda k: k.name)
     
     reviews = storage.all(Review).values()
-    reviews = sorted(reviews, key=lambda k: k.name)
+   # reviews = sorted(reviews, key=lambda k: k.name)
     
 
     return render_template('101-hbnb.html',
